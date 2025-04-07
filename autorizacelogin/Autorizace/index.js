@@ -6,7 +6,7 @@ const path = require('path');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 
-const app = express();
+const app = express();          //ps jsem trochu zmateny u pojmu / nevim jak udelat Odevzdejte s exportem databáze a bez složky node_modules asi chapu ze mam odendat node modules ale nejsem si jisty takze to tam radi necham
 const PORT = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
