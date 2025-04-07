@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Můj účet</title>
+  <script>
+    async function loadUser() {
+      const res = await fetch('/me');
+      if (res.status !== 200) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      const user = await res.json();
+      document.getElementById('username').textContent = user.username;
+      document.querySelector('input[name="name"]').value = user.name;
+      document.querySelector('input[name="email"]').value = user.email;
+    }
+
+    async function updateUser(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new URLSearchParams(new FormData(form));
+      const res = await fetch('/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: data,
+      });
+
+      const msg = await res.text();
+      alert(msg);
+    }
+
+    window.onload = loadUser;
+  </script>
+</head>
+<body>
+  <h1>Vítej, <span id="username">...</span></h1>
+
+  <form onsubmit="updateUser(event)">
+    <label>Jméno: <input type="text" name="name" required></label><br>
+    <label>Email: <input type="email" name="email" required></label><br>
+    <button type="submit">Uložit změny</button>
+  </form>
+
+  <p><a href="/logout">Odhlásit se</a></p>
+</body>
+</html>
